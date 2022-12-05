@@ -64,10 +64,13 @@ exports.loginUsuario = async (req, res) => {
     const token = jwt.sign(datosYTokenUsuario, "grupo3");
     userExist.token = token;
     await UserModel.updateOne({ email }, userExist);
+    res.status(200).json(userExist);
   } catch (error) {
     console.log(error);
   }
 };
+
+exports.logoutUsuario = () => {};
 
 exports.verUsuario = async (req, res) => {
   const usuario = await UserModel.findOne({ _id: req.params.id });

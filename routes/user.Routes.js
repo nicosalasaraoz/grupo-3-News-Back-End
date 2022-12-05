@@ -45,6 +45,7 @@ router
     userController.crearUsuario
   )
   .post("/login", userController.loginUsuario)
+  .post("/logout", userController.logoutUsuario)
 
   //las rutas van desde la mas generica a la mas especifica. ejemplo id!
   .get("/", userController.verUsuarios)
