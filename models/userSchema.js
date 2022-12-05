@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
+  token: {
+    type: String,
+    default: "",
+  },
+  rol: {
+    type: String,
+    default: "user",
+  },
 });
 
 //ahora vamos con el MODELO
