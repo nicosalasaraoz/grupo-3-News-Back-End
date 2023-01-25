@@ -13,7 +13,7 @@ exports.crearUsuario = async (req, res) => {
   const nameExist = await UserModel.findOne({ name: req.body.name });
 
   if (nameExist) {
-    return res.status(400).json("el usuario ya esta registrado!");
+    return res.status(400).json("el usuario ya existe!");
   }
 
   try {
@@ -86,7 +86,6 @@ exports.verUsuario = async (req, res) => {
 
 exports.verUsuarios = async (req, res) => {
   const usuarios = await UserModel.find();
-  console.log(usuarios);
   res.send(usuarios);
 };
 
@@ -103,7 +102,6 @@ exports.eliminarUsuarios = async (req, res) => {
   const usuarioEliminado = await UserModel.findOneAndDelete({
     _id: req.params.id,
   });
-  console.log(usuarioEliminado);
   if (!usuarioEliminado) {
     res.status(404).json("No se encontro el usuario");
   } else {
