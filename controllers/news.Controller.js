@@ -10,7 +10,6 @@ exports.crearNews = async (req, res) => {
   const categoryExist = await NewsModel.findOne({ title: req.body.title });
   res.status(200).json(categoryExist);
   if (categoryExist) {
-    console.log(categoryExist);
     return res.status(400).json("Ya existe una noticia con este titulo");
   }
 
@@ -24,7 +23,6 @@ exports.crearNews = async (req, res) => {
 };
 
 exports.verNew = async (req, res) => {
-  console.log("esta llegando una noticia");
   const news = await NewsModel.findOne({ _id: req.params.id });
   if (news) {
     res.status(200).json(news);
@@ -34,14 +32,15 @@ exports.verNew = async (req, res) => {
 };
 
 exports.verNews = async (req, res) => {
-  console.log("estan llegando las news");
-  const news = await NewsModel.find();
-  console.log(news);
-  res.status(200).json(news);
+  try {
+    const news = await NewsModel.find();
+    res.status(200).json(news);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.modificarNews = async (req, res) => {
-  console.log("la news llega");
   const newsEditado = await NewsModel.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
