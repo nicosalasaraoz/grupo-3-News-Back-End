@@ -3,35 +3,35 @@ const mongoose = require("mongoose");
 const newsSchema = new mongoose.Schema({
   category: {
     type: String,
-    require: true,
+    required: true,
   },
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   content: {
     type: String,
-    require: true,
+    required: true,
   },
   img: {
     img1: {
       type: String,
       trim: true,
-      require: true,
+      required: true,
     },
     img2: {
       type: String,
       trim: true,
-      require: true,
+      required: true,
     },
     img3: {
       type: String,
       trim: true,
-      require: true,
+      required: true,
     },
   },
 });
