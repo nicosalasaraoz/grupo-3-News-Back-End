@@ -1,9 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const { body, validationResult } = require("express-validator");
-const userRoute = require("./routes/userRoutes");
-const newsRoute = require("./routes/newsRoutes");
 const routes = require('./routes')
 
 //llamando a la conexion a la base de datos
