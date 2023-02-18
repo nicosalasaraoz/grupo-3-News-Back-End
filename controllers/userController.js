@@ -4,12 +4,15 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.crearUsuario = async (req, res) => {
+  const { name, email, pass, repeatPass } = req.body;
+  
+  if (name === '' && email === '' && pass === '' && repeatPass === '') {
+        return res.status(422).json({ msg: 'Formulario Totalmente Vacio. Se debe completar TODO el formulario' })
+    }
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  const { name, email, pass, repeatPass } = req.body;
   const nameExist = await UserModel.findOne({ name: req.body.name });
 
   if (nameExist) {
@@ -28,6 +31,7 @@ exports.crearUsuario = async (req, res) => {
     };
     const newUser = new UserModel(objectUser);
     await newUser.save();
+    await sendMailer(req.body.username)
     res.status(201).json("Usuario creado con exito");
   } catch (error) {
     res.status(500).json(error.message);
@@ -35,7 +39,17 @@ exports.crearUsuario = async (req, res) => {
 };
 
 exports.loginUsuario = async (req, res) => {
-  try {
+  
+    const { email, pass } = req.body;
+    if (email === '' && pass === '') {
+        return res.status(422).json({ msg: 'Formulario Totalmente Vacio. Se debe completar TODO el formulario' })
+    }
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    }
+    try {
     const { email, pass } = req.body;
     const userExist = await UserModel.findOne({ email });
 
@@ -61,7 +75,7 @@ exports.loginUsuario = async (req, res) => {
       },
     };
 
-    const token = jwt.sign(datosYTokenUsuario, "grupo3");
+    const token = jwt.sign(datosYTokenUsuario, process.env.JWT_SECRET);
     userExist.token = token;
     await UserModel.updateOne({ email }, userExist);
     res.status(200).json(userExist);
@@ -70,7 +84,14 @@ exports.loginUsuario = async (req, res) => {
   }
 };
 
-exports.logoutUsuario = () => {};
+exports.logoutUser = async (req, res) => {
+    try {
+        await UserModel.updateOne({ _id: res.locals.user.id }, { $set: { token: '' } })
+        res.json({ mensaje: 'Deslogueo ok' })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 exports.verUsuario = async (req, res) => {
   const usuario = await UserModel.findOne({ _id: req.params.id });

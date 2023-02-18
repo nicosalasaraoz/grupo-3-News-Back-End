@@ -5,20 +5,20 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     lowercase: true,
-    trim: true,
+    trim: true
   },
   email: {
     type: String,
     unique: true,
     trim: true,
     require: true,
-    lowercase: true,
+    lowercase: true
   },
   pass: {
     type: String,
     require: true,
     lowercase: true,
-    trim: true,
+    trim: true
   },
   repeatPass: {
     type: String,
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   },
   token: {
     type: String,
-    default: "",
+    default: ""
   },
   rol: {
     type: String,
