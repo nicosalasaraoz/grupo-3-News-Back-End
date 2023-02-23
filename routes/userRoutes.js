@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/user.Controller");
+const userController = require("../controllers/userController");
 const { body } = require("express-validator");
 //dejar una sola constante! con camel
 
@@ -45,7 +45,7 @@ router
     userController.crearUsuario
   )
   .post("/login", userController.loginUsuario)
-  .post("/logout", userController.logoutUsuario)
+  .post("/logout", userController.logoutUser)
 
   //las rutas van desde la mas generica a la mas especifica. ejemplo id!
   .get("/", userController.verUsuarios)

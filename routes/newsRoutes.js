@@ -67,8 +67,8 @@ router
     ], newsController.modificarNews)
   router.delete("/:id", auth('admin'), newsController.eliminarNews);
 
-const app = express();
-app.get("/prueba", (req, res) => {
-    res.send("esto es una prueba de peticion get");
-});
+// const app = express();
+// app.get("/prueba", (req, res) => {
+//     res.send("esto es una prueba de peticion get");
+// });
 module.exports = router
